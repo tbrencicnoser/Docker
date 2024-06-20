@@ -1,4 +1,4 @@
 
 # Dockerfile
 FROM nginx
-COPY index.html /usr/share/nginx/html/index.html
+COPY index.html /home/tbrencic/index.html
