@@ -1,0 +1,35 @@
+
+version: '3.8'
+
+services:
+  nwc:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - /usr/share/nginx/html:/usr/share/nginx/html
+  wpc:
+    image: wordpress:latest
+    ports:
+      - "8081:80"
+    volumes:
+      - /var/www/html:/var/www/html
+    environment:
+      - WORDPRESS_DB_HOST=dbc
+      - WORDPRESS_DB_USER=root
+      - WORDPRESS_DB_PASSWORD=example
+  dbc:
+    image: mariadb:latest
+    volumes:
+      - /var/lib/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=example
+  pxc:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - /data/pxc/config:/etc/nginx/conf.d
+    depends_on:
+      - nwc
+      - wpc
